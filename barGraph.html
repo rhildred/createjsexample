@@ -1,0 +1,39 @@
+<!Doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1024" height="512"></canvas>
+        <script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+        <script>
+            var $scope = {
+                histogram:[15, 1, 12, 7, 4, 3, 7, 16, 4,5,3,1],
+                init: function(){
+                    $scope.stage = new createjs.Stage("myCanvas");
+                    //find the max item
+                    var nMax = 0;
+                    for(var n = 0; n < $scope.histogram.length; n++){
+                        if($scope.histogram[n] > nMax)nMax = $scope.histogram[n];
+                    }
+                    $scope.nScaleY = $scope.stage.canvas.height/nMax;
+                    $scope.nScaleX = 25;
+                    //make a new shape
+                    var shape = new createjs.Shape();
+	                $scope.stage.addChild(shape);
+                    for(var n = 0; n < $scope.histogram.length; n++){
+                        //set the color for every 2nd bar
+                        if(n%2)shape.graphics.beginFill('rgba(0,255,0,1)');
+                        else shape.graphics.beginFill('rgba(0,0,255,1)');
+                        //draw a rectangle
+                        shape.graphics.drawRect(n*$scope.nScaleX,
+                                $scope.stage.canvas.height - $scope.histogram[n] * $scope.nScaleY,
+                                $scope.nScaleX, $scope.histogram[n] * $scope.nScaleY);
+                    }
+                    $scope.stage.update();
+                }
+            };
+            $scope.init();
+
+        </script>
+    </body>
+</html>
