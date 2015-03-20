@@ -1,0 +1,28 @@
+<!Doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1024" height="512"></canvas>
+        <script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+        <script>
+            var $scope = {
+                stage: null,
+                image: null,
+                init: function(){
+                    $scope.stage = new createjs.Stage("myCanvas");
+                    $scope.image = new createjs.Bitmap("bus.png");
+                    $scope.stage.addChild($scope.image);
+                    createjs.Ticker.addEventListener("tick", $scope.handleTick);
+                },
+                handleTick: function(){
+                    $scope.image.x += 5;
+                    if($scope.image.x > $scope.stage.canvas.width)$scope.image.x = -$scope.image.getBounds().width;
+                    $scope.stage.update();
+                }
+            };
+            $scope.init();
+
+        </script>
+    </body>
+</html>
