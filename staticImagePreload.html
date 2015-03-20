@@ -8,14 +8,14 @@
         <script>
             var $scope = {
                 init: function(){
-                    $scope.stage = new createjs.Stage("myCanvas");
-                    $scope.image = new createjs.Bitmap("bus.png");
-                    $scope.stage.addChild($scope.image);
-                    createjs.Ticker.addEventListener("tick", $scope.handleTick);
+                    $scope.queue = new createjs.LoadQueue(true);
+                    $scope.queue.on("complete", $scope.preloaded, this);
+                    $scope.queue.loadManifest([{id:"image", src:"bus.png"}]);
                 },
-                handleTick: function(){
-                    $scope.image.x += 5;
-                    if($scope.image.x > $scope.stage.canvas.width)$scope.image.x = -$scope.image.getBounds().width;
+                preloaded: function(){
+                    $scope.stage = new createjs.Stage("myCanvas");
+                    $scope.image = new createjs.Bitmap($scope.queue.getResult("image"));
+                    $scope.stage.addChild($scope.image);
                     $scope.stage.update();
                 }
             };

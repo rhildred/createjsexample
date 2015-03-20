@@ -11,11 +11,6 @@
                     $scope.stage = new createjs.Stage("myCanvas");
                     $scope.image = new createjs.Bitmap("bus.png");
                     $scope.stage.addChild($scope.image);
-                    createjs.Ticker.addEventListener("tick", $scope.handleTick);
-                },
-                handleTick: function(){
-                    $scope.image.x += 5;
-                    if($scope.image.x > $scope.stage.canvas.width)$scope.image.x = -$scope.image.getBounds().width;
                     $scope.stage.update();
                 }
             };

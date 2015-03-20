@@ -1,0 +1,44 @@
+<!Doctype html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1024" height="512"></canvas>
+        <script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+        <script>
+            var $scope = {
+                init: function(){
+                    $scope.queue = new createjs.LoadQueue(true);
+                    $scope.queue.on("complete", $scope.preloaded, this);
+                    $scope.queue.loadManifest([{id:"bike", src:"bike.png"},{id:"wheel", src:"wheel.png"}]);
+                    window.onmousemove = $scope.handleMouseMove;
+                },
+                preloaded: function(){
+                    $scope.stage = new createjs.Stage("myCanvas");
+                    //create wheel first and get it's center right
+                    $scope.wheel = new createjs.Bitmap($scope.queue.getResult("wheel"));
+                    $scope.wheel.regX = $scope.wheel.getBounds().width/2;
+                    $scope.wheel.regY = $scope.wheel.getBounds().height/2;
+                    $scope.wheel.y = 132;
+                    //create the offset that we will use later
+                    $scope.wheel.x = $scope.xOffs = 20;
+                    $scope.stage.addChild($scope.wheel);
+                    //put the bike in front of the wheel
+                    $scope.bike = new createjs.Bitmap($scope.queue.getResult("bike"));
+                    $scope.stage.addChild($scope.bike);
+                    $scope.stage.update();
+                },
+                handleMouseMove: function(event){
+                    event = event || window.event; // IE-ism
+                    // event.clientX and event.clientY contain the mouse position
+                    var mouseX = $scope.bike.x = event.clientX;
+                    $scope.wheel.rotation = mouseX;
+                    $scope.wheel.x = mouseX + $scope.xOffs;
+                    $scope.stage.update();
+                }
+            };
+            $scope.init();
+
+        </script>
+    </body>
+</html>
