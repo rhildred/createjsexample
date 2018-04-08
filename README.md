@@ -7,4 +7,6 @@ See this [bar graph](https://rhildred.github.io/createjsexample/barGraph.html)
 
 See a lot of nothing for this non preloaded [non-bus](https://rhildred.github.io/createjsexample/staticImage.html)
 
+See this [moving bus](https://rhildred.github.io/createjsexample/movingBus.html)
+
 See this [preloaded bus](https://rhildred.github.io/createjsexample/staticImagePreload.html)
